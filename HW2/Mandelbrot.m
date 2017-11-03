@@ -1,7 +1,8 @@
-function [ result ] = Mandelbrot( x, origin )
+function [ result ] = Mandelbrot( origin, iteration )
 %MANDELBROT Summary of this function goes here
 %   Detailed explanation goes here
-    result = x^2 + origin;
-
+    result = origin;
+    for i = 1:iteration
+        result = result^2 + origin;
+    end
 end
-
