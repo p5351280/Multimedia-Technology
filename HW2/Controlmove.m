@@ -29,6 +29,13 @@ function [ limx1, limx2, limy1, limy2 ] = Controlmove( limx1, limx2, limy1, limy
             xlim([limx1, limx2]);
             ylim([limy1, limy2]);
         end
+    else
+        limx1 = limx1/0.95;
+        limx2 = limx2/0.95;
+        limy1 = limy1/0.95;
+        limy2 = limy2/0.95;
+        xlim([limx1, limx2]);
+        ylim([limy1, limy2]);
     end
 end
 

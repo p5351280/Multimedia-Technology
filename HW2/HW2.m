@@ -11,29 +11,33 @@ limx1 = -2;
 limx2 = 2;
 limy1 = -2;
 limy2 = 2;
-for count = 1:150
+for count = 1:130
     hold on;
-    if(count<7)
+    if(count<=7)
         iteration = count
     else
-        iteration = 7+count/11
+        iteration = 7+count/9
+        iteration = int8(iteration);
     end
     [inside, outside] = Check(C, iteration);
     C = inside;
     colormap autumn;
     colorbar;
     autumncolar = colormap;
-    colormap gray;
-    colorbar;
+    %colormap gray;
+    %colorbar;
     graycolar = colormap;
-    if mod(count, 3) == 1
+    %{
+    if mod(iteration, 3) == 1
         plot(outside, '.', 'Color', [1,0,0]);
-    elseif mod(count, 3) == 2
+    elseif mod(iteration, 3) == 2
         plot(outside, '.', 'Color', [0,1,0]);
     else
         plot(outside, '.', 'Color', [0,0,1]);
     end
-    %plot(outside, '.', 'Color', autumncolar(mod(count, 64)+1,:));
+    %}
+    
+    plot(outside, '.', 'Color', autumncolar(mod(iteration*6, 64)+1 ,:));
     %plot(inside, '.', 'Color', graycolar(mod(count, 64)+1,:));
 
     frame = frame+1;
