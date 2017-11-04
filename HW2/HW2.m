@@ -3,31 +3,48 @@ clc;
 
 [C, insideCount] = Divide(-2, 2, -2, 2);
 frame = 0;
+axis equal;
 plot(C, '.', 'MarkerEdgeColor', 'k');
 frame = frame+1;
 M(frame) = getframe;
-
-for iterativeCount = 1:1000
+limx1 = -2;
+limx2 = 2;
+limy1 = -2;
+limy2 = 2;
+for count = 1:150
     hold on;
-    [inside, outside] = Check(C, iterativeCount);
-    C = inside;
-    if mod(iterativeCount, 3) == 1
-        plot(outside, '.', 'MarkerEdgeColor', 'r');
-    elseif mod(iterativeCount, 3) == 2
-        plot(outside, '.', 'MarkerEdgeColor', 'g');
+    if(count<7)
+        iteration = count
     else
-        plot(outside, '.', 'MarkerEdgeColor', 'b');
+        iteration = 7+count/11
     end
+    [inside, outside] = Check(C, iteration);
+    C = inside;
+    colormap autumn;
+    colorbar;
+    autumncolar = colormap;
+    colormap gray;
+    colorbar;
+    graycolar = colormap;
+    if mod(count, 3) == 1
+        plot(outside, '.', 'Color', [1,0,0]);
+    elseif mod(count, 3) == 2
+        plot(outside, '.', 'Color', [0,1,0]);
+    else
+        plot(outside, '.', 'Color', [0,0,1]);
+    end
+    %plot(outside, '.', 'Color', autumncolar(mod(count, 64)+1,:));
+    %plot(inside, '.', 'Color', graycolar(mod(count, 64)+1,:));
+
     frame = frame+1;
     M(frame) = getframe;
-    
-    if mod(iterativeCount, 10) == 0
-        
-        [C, insideCount] = Divide(-1, 1, -1, 1);
-        [inside, outside] = Check(C, iterativeCount);
-        C = inside;
-    end
-    zoom(1.01);
+    [limx1, limx2, limy1, limy2] = Controlmove(limx1, limx2, limy1, limy2, count);
+
+    %if mod(count, 15) == 0
+    %    [C, insideCount] = Divide(limx1, limx2, limy1, limy2);
+    %    [inside, outside] = Check(C, iteration);
+    %    C = inside;
+    %end
 end
 
-%movie(M, 10);
+movie(M, 3);
